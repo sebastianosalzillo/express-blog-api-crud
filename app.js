@@ -3,6 +3,11 @@ const app = express();
 const port = 3000;
 const postsRouter = require('./routers/posts');
 
+
+// aggiungo il bodi parser per lea richiesta create
+app.use(express.json());
+
+
 app.get('/', (req, res) => {
   res.send('Server del mio blog');
 });

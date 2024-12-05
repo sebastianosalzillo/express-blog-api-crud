@@ -4,7 +4,7 @@ const posts = [
       titolo: "Il mio primo post",
       contenuto: "Benvenuti nel mio blog personale!",
       immagine: "./images/ciambellone.jpeg",
-      tags: ["introduzione", "blog", "personale"]
+      tags: ["introduzione", "blog", "personale","film"]
     },
     {
       id: 2,

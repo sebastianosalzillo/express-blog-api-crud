@@ -9,19 +9,23 @@ const router = express.Router();
 
 
 const index = (req, res) => {
-    const queryString = req.query;
-    if (queryString.tags !== undefined) {
-     const filteredPosts = posts.filter(post => post.tags.includes(queryString.tags));
-     res.json(filteredPosts);
-     } else {
+    const queryTags = req.query.tags;
+    let filteredPosts = posts;
+
+    if (queryTags) {
+        filteredPosts = posts.filter(post => post.tags.includes(queryTags));
+    }
 
     res.json({
-        conteggio: posts.length,
-        posts: posts,
-        images: posts.map(post => post.immagine)
+        conteggio: filteredPosts.length,
+        posts: filteredPosts,
+        images: filteredPosts.map(post => post.immagine),
     });
-}
 };
+
+
+
+
 
 
 const show = (req, res) => {
@@ -39,18 +43,44 @@ const show = (req, res) => {
 
 
 
-const create = (req, res) => { 
-    res.json("creaiamo un nuovo post")
+const create = (req, res) => {
+    console.log(req.body)
+    const newPost = req.body;
+    const lastIndex = posts.length - 1;
+    const newId = posts[lastIndex].id + 1;
+    newPost.id = newId;
+    posts.push(newPost);
+    res.statusCode = 201;
+    res.json(newPost);
+
 };
 
+
 const update = (req, res) => {
-    res.json("aggiunge i dati di uno specifico elemento")
+    const postsId = parseInt(req.params.id);
+
+    const newData = req.body;
+
+
+    if (!posts[postsId]) {
+        return res.status(404).json({ error: "Post not found" });
+    }
+
+
+    newData.id = postsId;
+    posts[postsId - 1] = newData;
+
+    console.log(posts);
+
+
+    res.json(newData);
 };
+
 
 
 const modify = (req, res) => {
     res.json("modifichiamo solo elementi selezionati")
-    };
+};
 
 
 const destroy = (req, res) => {
@@ -70,10 +100,10 @@ const destroy = (req, res) => {
 
 
 module.exports = {
-index,
-show,
-create,
-update,
-modify,
-destroy
+    index,
+    show,
+    create,
+    update,
+    modify,
+    destroy
 }

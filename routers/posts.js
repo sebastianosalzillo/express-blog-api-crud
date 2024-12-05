@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
 
 
 
-// create
+// Store => create
 
 router.post("/", (req, res) => {
     postsController.create(req, res);

@@ -19,7 +19,7 @@ const index = (req, res) => {
     res.json({
         conteggio: filteredPosts.length,
         posts: filteredPosts,
-        images: filteredPosts.map(post => post.immagine),
+        images: filteredPosts.map(post => post.immagine)
     });
 };
 
@@ -32,9 +32,7 @@ const show = (req, res) => {
     const postsId = req.params.id;
     const resultPost = posts.find(post => String(post.id) === postsId);
 
-    if (!resultPost) {
-        return res.status(404).json({ errore: "Post non trovato" });
-    }
+   
 
     res.json({ resultPost });
 
@@ -62,9 +60,7 @@ const update = (req, res) => {
     const newData = req.body;
 
 
-    if (!posts[postsId]) {
-        return res.status(404).json({ error: "Post not found" });
-    }
+  
 
 
     newData.id = postsId;
@@ -91,7 +87,7 @@ const destroy = (req, res) => {
     }
     posts.splice(index, 1);
     res.sendStatus(204);
-    // res.json({ messaggio: "Post eliminato con successo" });
+    
 };
 
 
